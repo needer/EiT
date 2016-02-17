@@ -1,14 +1,16 @@
 #include <iostream>
 #include "camera.h"
-#include "SFML/Audio.hpp"
+#include "SFML/Window.hpp"
 
 int main(int argc, char *argv[])
 {
 	std::cout << "Hello World!" << std::endl;
-	Camera c;
-
-	sf::Music m;
-	m.openFromFile("C:/asdf.mp3");
+	sf::Window w;
+	while (w.isOpen())
+	{
+		sf::Event e;
+		w.pollEvent(e);
+	}
 
 	return 0;
 }
