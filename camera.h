@@ -8,10 +8,39 @@
 class Camera
 {
 private:
+	bool running;
+	cv::VideoCapture cap;
+	cv::Mat frame;
+	cv::Mat imgThresholded;
+	cv::Mat imgHSV;
+
+
+
+	// Calibration variables
+	int iLowH = 0;
+	int iHighH = 179;
+	int iLowS = 0;
+	int iHighS = 255;
+	int iLowV = 0;
+	int iHighV = 255;
+
+
 
 public:
+	enum DISPLAY_STATE
+	{
+		NORMAL,
+		THRESHOLDED
+	};
+	
+	DISPLAY_STATE state = NORMAL;
 	Camera();
-	void start();
-	Vec2 stop();
+	~Camera();
+	void threshold();
+	Vec2 track();
+	void capture();
+	void drawCircle(const Vec2& position);
+	void display();
 
+	bool isRunning();
 };

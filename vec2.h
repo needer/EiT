@@ -4,7 +4,7 @@
 class Vec2
 {
 public:
-	float x, y;
-	Vec2(float x, float y);
+	int x, y;
+	Vec2(int x, int y);
 	float magnitude();
 };

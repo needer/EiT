@@ -5,7 +5,7 @@
 using namespace cv;
 using namespace std;
 
-int main()
+int main2()
 {
 	VideoCapture cap(0);
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
