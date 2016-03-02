@@ -1,10 +1,12 @@
 #pragma once
 
+#include <vector>
+
 class Individual
 {
 public:
-        int[] genotype;
+        std::vector<int> genotype;
         float fitness;
 
-        Individual(int[]);
+        Individual(std::vector<int>);
         ~Individual();

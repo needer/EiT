@@ -37,10 +37,10 @@ public:
         void mating();
         void calculateFitness();
         double sigmaScaling();
-        std::vector<int> mutation(std::vector<int> genotype);
+        std::vector<int> mutation(std::vector<int>);
         int newGeno();
         std::vector<int> randomGenotype();
-        std::vector<int> crossover(std::vector<int> genotype1, std::vector<int> genotype2);
+        std::vector<int> crossover(std::vector<int>, std::vector<int>);
         void loggingRoutine();
         void plottingRoutine();
 };

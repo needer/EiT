@@ -1,6 +1,6 @@
 #include "individual.h"
 
-Individual::Individual(int[] genotype)
+Individual::Individual(std::vector<int> genotype)
 {
         this->genotype = genotype;
         this->fitness = 0;
