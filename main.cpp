@@ -6,7 +6,7 @@
 // Hewwego!
 int main(int argc, char *argv[])
 {
-	// INIT
+	// Init Camera
 	Camera c = Camera();
 	if (!c.isRunning())
 		return 0;
@@ -16,11 +16,11 @@ int main(int argc, char *argv[])
 	Vec2 startPosition(0, 0);
 	Vec2 endPosition(0, 0);
 
-	// Clock
+	// Clock and Delta Time
 	sf::Clock clock;
 	sf::Time dt = clock.getElapsedTime();
 
-	// CALIBRATION
+	// Main Loop
 	while (true)
 	{
 		// Take a picture
@@ -41,8 +41,10 @@ int main(int argc, char *argv[])
 
 
 		// Log debug
+		std::cout << "Position: " << "(" << pos.x << ", " << pos.y << ")" << std::endl;
 		std::cout << "Velocity: " << "(" << vel.x << ", " << vel.y << ")" << std::endl;
 		std::cout << "FPS: " << 1.0f / dt.asSeconds() << std::endl;
+
 
 		// Display 
 		c.display();

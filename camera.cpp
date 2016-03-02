@@ -4,9 +4,9 @@
 Camera::Camera() : 
 	cap(0), running(false)
 {
-	cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
-	cap.set(CV_CAP_PROP_FPS, 25);
+	cap.set(CV_CAP_PROP_FRAME_WIDTH, 600);
+	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 600);
+	cap.set(CV_CAP_PROP_FPS, 30);
 
 	if (cap.isOpened())
 		running = true;
