@@ -1,8 +1,11 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
+#include <stdlib.h>
+#include <time.h>
 
-class Algorithm
+class EvolutionaryAlgorithm
 {
 public:
         int generationNumber;
@@ -22,12 +25,13 @@ public:
         std::vector<Individual> children;
         std::vector<Individual> masterRace;
         
-        Algorithm();
-        ~Algorithm();
+        EvolutionaryAlgorithm();
+        ~EvolutionaryAlgorithm();
         void evolutionaryLoop();
         void fitnessEvaluation();
         void elitism();
         void mating();
+        void calculateFitness();
         float sigmaScaling();
         int[] mutation(int[] genotype);
         int newGeno();
