@@ -2,6 +2,7 @@
 #include "camera.h"
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"
+#include "remoteArduino.h"
 
 // Hewwego!
 int main(int argc, char *argv[])
@@ -20,6 +21,11 @@ int main(int argc, char *argv[])
 	sf::Clock clock;
 	sf::Time dt = clock.getElapsedTime();
 
+	// Connect to arduino
+	RemoteArduino arduino;
+	arduino.connect(sf::IpAddress("localhost"), 1337);
+
+
 	// Main Loop
 	while (true)
 	{
@@ -32,7 +38,7 @@ int main(int argc, char *argv[])
 		// Get the position of the object
 		Vec2 pos = c.track();
 
-		// Show the target
+		// Draw the target on the screen
 		c.drawCircle(pos);
 
 		// Calculate velocity
@@ -43,8 +49,8 @@ int main(int argc, char *argv[])
 		// Log debug
 		std::cout << "Position: " << "(" << pos.x << ", " << pos.y << ")" << std::endl;
 		std::cout << "Velocity: " << "(" << vel.x << ", " << vel.y << ")" << std::endl;
+		std::cout << "Velocity: " << (int) vel.magnitude() << std::endl;
 		std::cout << "FPS: " << 1.0f / dt.asSeconds() << std::endl;
-
 
 		// Display 
 		c.display();

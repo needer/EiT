@@ -29,3 +29,4 @@ Vec2 Vec2::operator+(const Vec2& other)
 
 	return temp;
 }
+
