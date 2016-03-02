@@ -6,10 +6,10 @@ Camera::Camera() :
 {
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
+	cap.set(CV_CAP_PROP_FPS, 25);
 
 	if (cap.isOpened())
 		running = true;
-
 	cv::namedWindow("CameraCalibration", CV_WINDOW_AUTOSIZE);
 
 	cvCreateTrackbar("LowH", "CameraCalibration", &iLowH, 179); //Hue (0 - 179)
@@ -67,7 +67,7 @@ Vec2 Camera::track()
 // Take a picture
 void Camera::capture()
 {
-	cap.read(frame);
+	cap >> frame;
 }
 
 void Camera::drawCircle(const Vec2& position)

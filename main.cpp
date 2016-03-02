@@ -1,5 +1,6 @@
 #include <iostream>
 #include "camera.h"
+#include "SFML/System.hpp"
 #include "SFML/Window.hpp"
 
 // Hewwego!
@@ -10,6 +11,14 @@ int main(int argc, char *argv[])
 	if (!c.isRunning())
 		return 0;
 
+	// Position variables
+	Vec2 lastPosition(0, 0);
+	Vec2 startPosition(0, 0);
+	Vec2 endPosition(0, 0);
+
+	// Clock
+	sf::Clock clock;
+	sf::Time dt = clock.getElapsedTime();
 
 	// CALIBRATION
 	while (true)
@@ -26,16 +35,21 @@ int main(int argc, char *argv[])
 		// Show the target
 		c.drawCircle(pos);
 
-		// Display current position in console
-		std::cout << "(" << pos.x << ", " << pos.y << ")" << std::endl;
+		// Calculate velocity
+		Vec2 vel = pos - lastPosition;
+		lastPosition = pos;
 
+
+		// Log debug
+		std::cout << "Velocity: " << "(" << vel.x << ", " << vel.y << ")" << std::endl;
+		std::cout << "FPS: " << 1.0f / dt.asSeconds() << std::endl;
 
 		// Display 
 		c.display();
 
 
 		// Handle input
-		int key = cv::waitKey(10);
+		int key = cv::waitKey(1);
 		if (key == 27)
 			break;
 		if (key == 32)
@@ -45,7 +59,9 @@ int main(int argc, char *argv[])
 			else
 				c.state = Camera::NORMAL;
 		}
-		
+
+		// Calculate delta time
+		dt = clock.restart();
 	}
 
 	// MAIN PROGRAM
