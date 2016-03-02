@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <numeric>
 #include <stdlib.h>
 #include <time.h>
 
@@ -12,18 +13,21 @@ public:
         int numberOfElites;
         int populationSize;
         int childrenSize;
-        float crossoverRate;
-        float mutationRate;
-        float bestFitness;
-        float averageFitness;
-        std::vector<float> bestFitnessArray;
-        std::vector<float> averageFitnessArray;
-        std::vector<float> standardDeviationFitnessList;
-        std::vector<float> generationNumberList;
+        double crossoverRate;
+        double mutationRate;
+        double bestFitness;
+        double averageFitness;
+        double standardDeviationFitness;
+        std::vector<double> bestFitnessArray;
+        std::vector<double> averageFitnessArray;
+        std::vector<double> standardDeviationFitnessArray;
+        std::vector<double> generationNumberArray;
         std::vector<Individual> population;
-        std::vector<float> populationFitness;
+        std::vector<double> populationFitness;
+        std::vector<double> scaledFitness;
         std::vector<Individual> children;
         std::vector<Individual> masterRace;
+        std::vector<int> bestGenotype;
         
         EvolutionaryAlgorithm();
         ~EvolutionaryAlgorithm();
@@ -32,11 +36,11 @@ public:
         void elitism();
         void mating();
         void calculateFitness();
-        float sigmaScaling();
-        int[] mutation(int[] genotype);
+        double sigmaScaling();
+        std::vector<int> mutation(std::vector<int> genotype);
         int newGeno();
-        int[] randomGenotype();
-        int[] crossover(genotype1, genotype2);
+        std::vector<int> randomGenotype();
+        std::vector<int> crossover(std::vector<int> genotype1, std::vector<int> genotype2);
         void loggingRoutine();
         void plottingRoutine();
 };
