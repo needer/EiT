@@ -94,7 +94,7 @@ void EvolutionaryAlgorithm::mating()
 {
 	children.clear();
 	scaledFitness.clear();
-	sigmaScaling();
+	scaledFitness = sigmaScaling();
 	for (int i = 0; i < childrenSize; i++)
 	{
 		double rouletteValue1 = rand();
@@ -135,15 +135,17 @@ std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
 	for (int i = 0; i < populationSize; i++)
 	{
 		sigmaFitness.push_back(1 + ((population[i].fitness - mean) / standardDeviationFitness2));
-		double sigmaFitnessSum = 0;
-		for (int n : sigmaFitness)
-		{
-			sigmaFitnessSum += n;
-		}
-		for (i = 0; i < populationSize; i++)
-		{
-			sigmaFitness[i] = sigmaFitness[i] / sigmaFitnessSum;
-		}
+	}
+
+	double sigmaFitnessSum = 0;
+	for (int n : sigmaFitness)
+	{
+		sigmaFitnessSum += n;
+	}
+
+	for (int i = 0; i < sigmaFitness.size(); i++)
+	{
+		sigmaFitness[i] = sigmaFitness[i] / sigmaFitnessSum;
 	}
 	return sigmaFitness;
 }
@@ -175,12 +177,12 @@ int EvolutionaryAlgorithm::newGeno()
 
 std::vector<int> EvolutionaryAlgorithm::randomGenotype()
 {
-    std::vector<int> newRandomGenotype;
-    for(int i=0; i<solutionLength; i++)
-    {
-        newRandomGenotype.push_back(newGeno());
-    }
-    return newRandomGenotype;
+	std::vector<int> newRandomGenotype;
+	for (int i = 0; i < solutionLength; i++)
+	{
+		newRandomGenotype.push_back(newGeno());
+	}
+	return newRandomGenotype;
 }
 
 std::vector<int> EvolutionaryAlgorithm::crossover(std::vector<int> genotype1, std::vector<int> genotype2)
@@ -224,14 +226,15 @@ void EvolutionaryAlgorithm::loggingRoutine()
 		}
 	}
 	bestGenotype = population[fittestIndex].genotype;
-	
+
 	std::cout << "Generation Number: " << generationNumber << std::endl;
 	std::cout << "Average Fitness: " << averageFitness << std::endl;
 	std::cout << "Standard Deviation: " << standardDeviationFitness << std::endl;
 	std::cout << "Best Fitness: " << bestFitness << std::endl;
 	std::cout << "Best Genotype: ";
 	for (int i : bestGenotype)
-		std::cout << i << std::endl;
+		std::cout << i;
+	std::cout << std::endl;
 
 	//bestFitnessArray.push_back(bestFitness);
 	//averageFitnessArray.push_back(averageFitness);
