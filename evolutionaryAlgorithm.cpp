@@ -3,8 +3,8 @@
 EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 {
         generationNumber = 0;
-        numberOfElites = 1;
-        populationSize = 10;
+        numberOfElites = 5; //1
+        populationSize = 50; //10
         childrenSize = populationSize-numberOfElites;
         crossoverRate = 0.5;
         mutationRate = 0.1;
@@ -42,7 +42,8 @@ void EvolutionaryAlgorithm::fitnessEvaluation()
         sigmaScaling();
 }
 void EvolutionaryAlgorithm::calculateFitness()
-{}
+{
+}
 
 void EvolutionaryAlgorithm::elitism()
 {
@@ -135,7 +136,7 @@ std::vector<int> EvolutionaryAlgorithm::mutation(std::vector<int> genotype)
 
 int EvolutionaryAlgorithm::newGeno()
 {
-    return rand() % 4;
+    return rand() % 2; //4
 }
 
 std::vector<int> EvolutionaryAlgorithm::crossover(std::vector<int> genotype1, std::vector<int> genotype2)
