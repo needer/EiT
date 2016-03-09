@@ -173,12 +173,23 @@ int EvolutionaryAlgorithm::newGeno()
 	return rand() % 2; //4
 }
 
+std::vector<int> EvolutionaryAlgorithm::randomGenotype()
+{
+    std::vector<int> newRandomGenotype;
+    for(int i=0; i<solutionLength; i++)
+    {
+        newRandomGenotype.push_back(newGeno());
+    }
+    return newRandomGenotype;
+}
+
 std::vector<int> EvolutionaryAlgorithm::crossover(std::vector<int> genotype1, std::vector<int> genotype2)
 {
 	std::vector<int> newGenotype;
 	for (int i = 0; i < genotype1.size(); i++)
 	{
-		if (rand() <= crossoverRate)
+		double rand = (double)std::rand() / (RAND_MAX + 1.0);
+		if (rand <= crossoverRate)
 		{
 			newGenotype.push_back(genotype1[i]);
 		}
