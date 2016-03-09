@@ -13,6 +13,7 @@ public:
     int numberOfElites;
     int populationSize;
     int childrenSize;
+    int solutionLength;
     double crossoverRate;
     double mutationRate;
     double bestFitness;
@@ -29,6 +30,7 @@ public:
     std::vector<Individual> children;
     std::vector<Individual> masterRace;
     std::vector<int> bestGenotype;
+    std::vector<int> solution;
         
     EvolutionaryAlgorithm();
     ~EvolutionaryAlgorithm();

@@ -11,7 +11,12 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
     bestFitness = 0;
     averageFitness = 0;
     noSolution = true;
-    for( int i = 0; i<populationSize; i++)
+    solutionLength = 40;
+    for(int i = 0; i<solutionLength; i++)
+    {
+        solution.push_back(newGeno());
+    }
+    for(int i = 0; i<populationSize; i++)
     {
         population.push_back(Individual(randomGenotype());
     }
@@ -44,7 +49,18 @@ void EvolutionaryAlgorithm::fitnessEvaluation()
 }
 void EvolutionaryAlgorithm::calculateFitness()
 {
-        
+    for(int i = 0; i<childrenSize; i++)
+    {
+        double count = 0;
+        for(int j = 0; i<solutionLength; i++)
+        {
+            if genotype[i] == solution[i]
+            {
+                count++;
+            }
+        }
+        children[i].fitness = count/solutionLength;
+    }
 }
 
 void EvolutionaryAlgorithm::elitism()
