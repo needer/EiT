@@ -2,100 +2,102 @@
 
 EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 {
-        generationNumber = 0;
-        numberOfElites = 5; //1
-        populationSize = 50; //10
-        childrenSize = populationSize-numberOfElites;
-        crossoverRate = 0.5;
-        mutationRate = 0.1;
-        bestFitness = 0;
-        averageFitness = 0;
-        for( int i = 0; i<populationSize; i++)
-        {
-                population.push_back(Individual(randomGenotype());
-        }
-        srand(time(NULL));
-        evolutionaryLoop();
+    generationNumber = 0;
+    numberOfElites = 5; //1
+    populationSize = 50; //10
+    childrenSize = populationSize-numberOfElites;
+    crossoverRate = 0.5;
+    mutationRate = 0.1;
+    bestFitness = 0;
+    averageFitness = 0;
+    noSolution = true;
+    for( int i = 0; i<populationSize; i++)
+    {
+        population.push_back(Individual(randomGenotype());
+    }
+    srand(time(NULL));
+    evolutionaryLoop();
 }
 
 void EvolutionaryAlgorithm::evolutionaryLoop()
 {
-        children.insert(children.end(), population.begin(), population.end() );
+    children.insert(children.end(), population.begin(), population.end() );
+    fitnessEvaluation();
+    loggingRoutine();
+    while(noSolution)
+    {
+        elitism();
+        mating();
         fitnessEvaluation();
+        population.clear();
+        population.insert(population.end(), children.begin(), children.end() );
+        population.insert(population.end(), masterRace.begin(), masterRace.end() );
         loggingRoutine();
-        while(true)
-        {
-                elitism();
-                mating();
-                fitnessEvaluation();
-                population.clear();
-                population.insert(population.end(), children.begin(), children.end() );
-                population.insert(population.end(), masterRace.begin(), masterRace.end() );
-                loggingRoutine();
-        }
-        //plottingRoutine();
+    }
+    //plottingRoutine();
 }
 
 void EvolutionaryAlgorithm::fitnessEvaluation()
 {
-        calculateFitness();
-        sigmaScaling();
+    calculateFitness();
+    sigmaScaling();
 }
 void EvolutionaryAlgorithm::calculateFitness()
 {
+        
 }
 
 void EvolutionaryAlgorithm::elitism()
 {
-        std::vector<double> previousGenerationFitness;
-        for(int i = 0; i<populationSize; i++)
-        {
-                previousGenerationFitness.push_back(populationFitness[i]);
-        }
-        masterRace.clear();
-        for(int i = 0; i<numberOfElites; i++)
-        {
-                fittestIndex = *std::max_element(previousGenerationFitness, previousGenerationFitness+populationSize);
-                masterRace.push_back(previousGenerationFitness[fittestIndex]);
-                previousGenerationFitness[fittestIndex] = 0;
-        }
+    std::vector<double> previousGenerationFitness;
+    for(int i = 0; i<populationSize; i++)
+    {
+        previousGenerationFitness.push_back(populationFitness[i]);
+    }
+    masterRace.clear();
+    for(int i = 0; i<numberOfElites; i++)
+    {
+        fittestIndex = *std::max_element(previousGenerationFitness, previousGenerationFitness+populationSize);
+        masterRace.push_back(previousGenerationFitness[fittestIndex]);
+        previousGenerationFitness[fittestIndex] = 0;
+    }
 }
 
 void EvolutionaryAlgorithm::mating()
 {
-        children.clear();
-        scaledFitness.clear();
-        sigmaScaling();
-        for(int i=0; i<childrenSize; i++)
+    children.clear();
+    scaledFitness.clear();
+    sigmaScaling();
+    for(int i=0; i<childrenSize; i++)
+    {
+        double rouletteValue1 = rand();
+        double rouletteValue2 = rand();
+        int index1 = 0;
+        int index2 = 0;
+        double needleValue = 0;
+        for(int i = 0; i<populationSize; i++)
         {
-                double rouletteValue1 = rand();
-                double rouletteValue2 = rand();
-                int index1 = 0;
-                int index2 = 0;
-                double needleValue = 0;
-                for(int i = 0; i<populationSize; i++)
-                {
-                        needleValue += scaledFitness[i];
-                        if(needleValue >= rouletteValue1)
-                        {
-                                index1 = i
-                                break;
-                        }
-                }
-                needleValue = 0;
-                for(int i = 0; i<populationSize; i++)
-                {
-                        needleValue += scaledFitness[i];
-                        if(needleValue >= rouletteValue2)
-                        {
-                                index1 = i
-                                break;
-                        }
-                }
-                std::vector<int> newGenotype = crossover(population[index1].genotype, population[index2].genotype);
-                newGenotype = mutation(newGenotype);
-                children.push_back(Individual(newGenotype));
+            needleValue += scaledFitness[i];
+            if(needleValue >= rouletteValue1)
+            {
+                index1 = i
+                break;
+            }
         }
+        needleValue = 0;
+        for(int i = 0; i<populationSize; i++)
+        {
+            needleValue += scaledFitness[i];
+            if(needleValue >= rouletteValue2)
+            {
+                index1 = i
+                break;
+            }
+        }
+        std::vector<int> newGenotype = crossover(population[index1].genotype, population[index2].genotype);
+        newGenotype = mutation(newGenotype);
+        children.push_back(Individual(newGenotype));
+    }
 }
 
 std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
@@ -105,14 +107,16 @@ std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
     std::vector<double> sigmaFitness;
     for(int i = 0; i<populationSize; i++)
     {
-            sigmaFitness.push_back(1+((fitness-mean)/standardDeviationFitness2));
-            double sigmaFitnessSum = 0;
-            for(int n : sigmaFitness)
-                    sigmaFitnessSum += n;
-            for(i = 0; i<populationSize; i++)
-            {
-                    sigmaFitness[i] = sigmaFitness[i]/sigmaFitnessSum;
-            }
+    i   sigmaFitness.push_back(1+((fitness-mean)/standardDeviationFitness2));
+i       double sigmaFitnessSum = 0;
+        for(int n : sigmaFitness)
+        {
+            sigmaFitnessSum += n;
+        }
+        for(i = 0; i<populationSize; i++)
+        {
+            sigmaFitness[i] = sigmaFitness[i]/sigmaFitnessSum;
+        }
     }
     return sigmaFitness;
 }
