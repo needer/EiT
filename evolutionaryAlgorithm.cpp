@@ -138,9 +138,9 @@ std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
 	}
 
 	double sigmaFitnessSum = 0;
-	for (int n : sigmaFitness)
+    for(int i; i<populationSize; i++)
 	{
-		sigmaFitnessSum += n;
+        sigmaFitnessSum += sigmaFitness[i];
 	}
 
 	for (int i = 0; i < sigmaFitness.size(); i++)
@@ -232,8 +232,8 @@ void EvolutionaryAlgorithm::loggingRoutine()
 	std::cout << "Standard Deviation: " << standardDeviationFitness << std::endl;
 	std::cout << "Best Fitness: " << bestFitness << std::endl;
 	std::cout << "Best Genotype: ";
-	for (int i : bestGenotype)
-		std::cout << i;
+    for(int i=0; i<solutionLength; i++)
+		std::cout << bestGenotype[i];
 	std::cout << std::endl;
 
 	//bestFitnessArray.push_back(bestFitness);
