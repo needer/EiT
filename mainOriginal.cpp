@@ -5,7 +5,7 @@
 #include "remoteArduino.h"
 
 // Hewwego!
-int main(int argc, char *argv[])
+int main3(int argc, char *argv[])
 {
 	// Init Camera
 	Camera c = Camera();

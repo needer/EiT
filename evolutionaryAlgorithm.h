@@ -5,6 +5,7 @@
 #include <numeric>
 #include <stdlib.h>
 #include <time.h>
+#include <iostream>
 
 #include "individual.h"
 
@@ -35,13 +36,12 @@ public:
     std::vector<int> solution;
         
     EvolutionaryAlgorithm();
-    ~EvolutionaryAlgorithm();
     void evolutionaryLoop();
     void fitnessEvaluation();
     void elitism();
     void mating();
     void calculateFitness();
-    double sigmaScaling();
+	std::vector<double> sigmaScaling();
     std::vector<int> mutation(std::vector<int>);
     int newGeno();
     std::vector<int> randomGenotype();

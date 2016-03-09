@@ -9,5 +9,4 @@ public:
     float fitness;
 
     Individual(std::vector<int>);
-    ~Individual();
 };
