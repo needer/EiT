@@ -138,7 +138,7 @@ std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
 	}
 
 	double sigmaFitnessSum = 0;
-    for(int i; i<populationSize; i++)
+    for(int i = 0; i < populationSize; i++)
 	{
         sigmaFitnessSum += sigmaFitness[i];
 	}
