@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "individual.h"
+
 class EvolutionaryAlgorithm
 {
 public:

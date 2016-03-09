@@ -24,7 +24,7 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
     evolutionaryLoop();
 }
 
-void EvolutionaryAlgorithm::evolutionaryLoop()
+EvolutionaryAlgorithm::evolutionaryLoop()
 {
     children.insert(children.end(), population.begin(), population.end() );
     fitnessEvaluation();
@@ -116,7 +116,7 @@ void EvolutionaryAlgorithm::mating()
     }
 }
 
-std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
+double EvolutionaryAlgorithm::sigmaScaling()
 {
     double standardDeviationFitness2 = 2*standardDeviationFitness;
     double mean = averageFitness;
