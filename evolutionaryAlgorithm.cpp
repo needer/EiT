@@ -61,6 +61,10 @@ void EvolutionaryAlgorithm::calculateFitness()
 			}
 		}
 		children[i].fitness = count / solutionLength;
+        if(children[i].fitness == 1)
+        {
+            noSolution = false;
+        }
 	}
 }
 
