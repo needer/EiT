@@ -2,7 +2,7 @@
 
 int main()
 {
-   
-    EvolutionaryAlgorithm ea;
-    return 0;
+
+	EvolutionaryAlgorithm ea;
+	return 0;
 }
