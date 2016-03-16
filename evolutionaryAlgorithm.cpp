@@ -3,7 +3,7 @@
 EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 {
 	generationNumber = 0;
-	numberOfElites = 5; //1
+	numberOfElites = 5; //2
 	populationSize = 50; //10
 	childrenSize = populationSize - numberOfElites;
 	crossoverRate = 0.5;
@@ -14,11 +14,19 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 	solutionLength = 40;
 	for (int i = 0; i < solutionLength; i++)
 	{
-		solution.push_back(newGeno());
+		solution.push_back(1);
 	}
+	std::cout << "Solution: " << solution.size() << " ";
+    for(int i=0; i<solutionLength; i++)
+		std::cout << solution[i];
+	std::cout << std::endl;
 	for (int i = 0; i < populationSize; i++)
 	{
 		population.push_back(Individual(randomGenotype()));
+        std::cout << "Individual Genotype: " << population[i].genotype.size() << " ";
+        for(int j = 0; j < solutionLength; j++)
+            std::cout << population[i].genotype[j];
+	    std::cout << std::endl;
 	}
 	srand(time(NULL));
 	evolutionaryLoop();
@@ -26,8 +34,19 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 
 void EvolutionaryAlgorithm::evolutionaryLoop()
 {
+	double rand = std::rand() / (RAND_MAX + 1.0);
+    std::cout << "Random Value: " << rand << std::endl;
 	children.insert(children.end(), population.begin(), population.end());
+	for (int i = 0; i < populationSize; i++)
+	{
+        std::cout << "Cildren Genotype: " << children[i].genotype.size() << " ";
+        for(int j = 0; j < solutionLength; j++)
+            std::cout << children[i].genotype[j];
+	    std::cout << std::endl;
+    }
 	fitnessEvaluation();
+	population.clear();
+	population.insert(population.end(), children.begin(), children.end());
 	loggingRoutine();
 	while (noSolution)
 	{
@@ -45,22 +64,27 @@ void EvolutionaryAlgorithm::evolutionaryLoop()
 void EvolutionaryAlgorithm::fitnessEvaluation()
 {
 	calculateFitness();
-	sigmaScaling();
 }
 
 void EvolutionaryAlgorithm::calculateFitness()
 {
-	for (int i = 0; i < childrenSize; i++)
+	int count;
+	for (int i = 0; i < children.size(); i++)
 	{
-		double count = 0;
-		for (int j = 0; i < solutionLength; i++)
+        count = 0;
+		for (int j = 0; j < solutionLength; j++)
 		{
+	        std::cout << "|";
+		    std::cout << children[i].genotype[j] << solution[j];
 			if (children[i].genotype[j] == solution[j])
 			{
 				count++;
 			}
 		}
-		children[i].fitness = count / solutionLength;
+	    std::cout << std::endl;
+	    std::cout << "Count: " << count << std::endl;
+		children[i].fitness = (double)count / (double)solutionLength;
+	    std::cout << "Fitness: " << children[i].fitness << std::endl;
         if(children[i].fitness == 1)
         {
             noSolution = false;
@@ -80,18 +104,20 @@ void EvolutionaryAlgorithm::elitism()
 	{
 		int fittestIndex = 0;
 		double max = 0.0;
-		for (int i = 0; i < previousGenerationFitness.size(); i++)
+		for (int j = 0; j < populationSize; j++)
 		{
-			if (max < previousGenerationFitness[i])
+			if (max < previousGenerationFitness[j])
 			{
-				fittestIndex = i;
-				max = previousGenerationFitness[i];
+				fittestIndex = j;
+				max = previousGenerationFitness[j];
 			}
 		}
 
 		masterRace.push_back(population[fittestIndex]);
 		previousGenerationFitness[fittestIndex] = 0;
 	}
+    for (int i = 0; i < numberOfElites; i++)
+        std::cout << "Elite Fitness: " << masterRace[i].fitness << std::endl;
 }
 
 void EvolutionaryAlgorithm::mating()
@@ -101,8 +127,8 @@ void EvolutionaryAlgorithm::mating()
 	scaledFitness = sigmaScaling();
 	for (int i = 0; i < childrenSize; i++)
 	{
-		double rouletteValue1 = rand();
-		double rouletteValue2 = rand();
+		double rouletteValue1 = std::rand() / (RAND_MAX + 1.0);
+		double rouletteValue2 = std::rand() / (RAND_MAX + 1.0);
 		int index1 = 0;
 		int index2 = 0;
 		double needleValue = 0;
@@ -121,7 +147,7 @@ void EvolutionaryAlgorithm::mating()
 			needleValue += scaledFitness[i];
 			if (needleValue >= rouletteValue2)
 			{
-				index1 = i;
+				index2 = i;
 				break;
 			}
 		}
@@ -150,6 +176,7 @@ std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
 	for (int i = 0; i < sigmaFitness.size(); i++)
 	{
 		sigmaFitness[i] = sigmaFitness[i] / sigmaFitnessSum;
+        std::cout << "SigmaFitness: " << sigmaFitness[i] << std::endl;
 	}
 	return sigmaFitness;
 }
@@ -159,9 +186,7 @@ std::vector<int> EvolutionaryAlgorithm::mutation(std::vector<int> genotype)
 	std::vector<int> newGenotype;
 	for (int i = 0; i < genotype.size(); i++)
 	{
-
-		double rand = (double)std::rand() / (RAND_MAX + 1.0);
-
+		double rand = std::rand() / (RAND_MAX + 1.0);
 		if (rand <= mutationRate)
 		{
 			newGenotype.push_back(newGeno());
@@ -214,6 +239,10 @@ void EvolutionaryAlgorithm::loggingRoutine()
 	{
 		populationFitness.push_back(population[i].fitness);
 	}
+	std::cout << "Population Fitness: ";
+    for(int i=0; i<populationSize; i++)
+		std::cout << population[i].fitness;
+	std::cout << std::endl;
 	generationNumber++;
 	averageFitness = std::accumulate(populationFitness.begin(), populationFitness.end(), 0.0) / populationFitness.size();
 	double squareSum = std::inner_product(populationFitness.begin(), populationFitness.end(), populationFitness.begin(), 0.0);
@@ -230,6 +259,7 @@ void EvolutionaryAlgorithm::loggingRoutine()
 		}
 	}
 	bestGenotype = population[fittestIndex].genotype;
+    bestFitness = population[fittestIndex].fitness;
 
 	std::cout << "Generation Number: " << generationNumber << std::endl;
 	std::cout << "Average Fitness: " << averageFitness << std::endl;

@@ -6,7 +6,7 @@ class Individual
 {
 public:
     std::vector<int> genotype;
-    float fitness;
+    double fitness;
 
     Individual(std::vector<int>);
 };
