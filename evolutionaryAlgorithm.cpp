@@ -16,17 +16,9 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 	{
 		solution.push_back(1);
 	}
-	std::cout << "Solution: " << solution.size() << " ";
-    for(int i=0; i<solutionLength; i++)
-		std::cout << solution[i];
-	std::cout << std::endl;
 	for (int i = 0; i < populationSize; i++)
 	{
 		population.push_back(Individual(randomGenotype()));
-        std::cout << "Individual Genotype: " << population[i].genotype.size() << " ";
-        for(int j = 0; j < solutionLength; j++)
-            std::cout << population[i].genotype[j];
-	    std::cout << std::endl;
 	}
 	srand(time(NULL));
 	evolutionaryLoop();
@@ -34,16 +26,7 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 
 void EvolutionaryAlgorithm::evolutionaryLoop()
 {
-	double rand = std::rand() / (RAND_MAX + 1.0);
-    std::cout << "Random Value: " << rand << std::endl;
 	children.insert(children.end(), population.begin(), population.end());
-	for (int i = 0; i < populationSize; i++)
-	{
-        std::cout << "Cildren Genotype: " << children[i].genotype.size() << " ";
-        for(int j = 0; j < solutionLength; j++)
-            std::cout << children[i].genotype[j];
-	    std::cout << std::endl;
-    }
 	fitnessEvaluation();
 	population.clear();
 	population.insert(population.end(), children.begin(), children.end());
@@ -74,17 +57,12 @@ void EvolutionaryAlgorithm::calculateFitness()
         count = 0;
 		for (int j = 0; j < solutionLength; j++)
 		{
-	        std::cout << "|";
-		    std::cout << children[i].genotype[j] << solution[j];
 			if (children[i].genotype[j] == solution[j])
 			{
 				count++;
 			}
 		}
-	    std::cout << std::endl;
-	    std::cout << "Count: " << count << std::endl;
 		children[i].fitness = (double)count / (double)solutionLength;
-	    std::cout << "Fitness: " << children[i].fitness << std::endl;
         if(children[i].fitness == 1)
         {
             noSolution = false;
@@ -116,8 +94,6 @@ void EvolutionaryAlgorithm::elitism()
 		masterRace.push_back(population[fittestIndex]);
 		previousGenerationFitness[fittestIndex] = 0;
 	}
-    for (int i = 0; i < numberOfElites; i++)
-        std::cout << "Elite Fitness: " << masterRace[i].fitness << std::endl;
 }
 
 void EvolutionaryAlgorithm::mating()
@@ -176,7 +152,6 @@ std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
 	for (int i = 0; i < sigmaFitness.size(); i++)
 	{
 		sigmaFitness[i] = sigmaFitness[i] / sigmaFitnessSum;
-        std::cout << "SigmaFitness: " << sigmaFitness[i] << std::endl;
 	}
 	return sigmaFitness;
 }
@@ -239,10 +214,6 @@ void EvolutionaryAlgorithm::loggingRoutine()
 	{
 		populationFitness.push_back(population[i].fitness);
 	}
-	std::cout << "Population Fitness: ";
-    for(int i=0; i<populationSize; i++)
-		std::cout << population[i].fitness;
-	std::cout << std::endl;
 	generationNumber++;
 	averageFitness = std::accumulate(populationFitness.begin(), populationFitness.end(), 0.0) / populationFitness.size();
 	double squareSum = std::inner_product(populationFitness.begin(), populationFitness.end(), populationFitness.begin(), 0.0);
