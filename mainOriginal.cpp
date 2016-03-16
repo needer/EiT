@@ -25,7 +25,6 @@ int main3(int argc, char *argv[])
 	RemoteArduino arduino;
 	arduino.connect(sf::IpAddress("localhost"), 1337);
 
-
 	// Main Loop
 	while (true)
 	{
@@ -61,12 +60,10 @@ int main3(int argc, char *argv[])
 		if (key == 27)
 			break;
 		if (key == 32)
-		{
 			if (c.state == Camera::NORMAL)
 				c.state = Camera::THRESHOLDED;
 			else
 				c.state = Camera::NORMAL;
-		}
 
 		// Calculate delta time
 		dt = clock.restart();

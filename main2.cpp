@@ -5,6 +5,7 @@
 using namespace cv;
 using namespace std;
 
+// Old stuff, only for reference. Do not use
 int main2()
 {
 	VideoCapture cap(0);
