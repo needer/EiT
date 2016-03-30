@@ -26,12 +26,15 @@ void RemoteArduino::addCommand(int motorNumber, int power)
 {
 	unsigned char motor = (unsigned char)motorNumber;
 	unsigned char poww = (unsigned char)power;
-	commands.push_back(motorNumber);
+	commands.push_back(motor);
 	commands.push_back(poww);
 }
 
-void RemoteArduino::send()
+void RemoteArduino::send(std::string message)
 {
-	tcpSocket.send(&commands[0], commands.size());
+	tcpSocket.send(message.c_str(), message.length());
+std::cout << message.length();
+std::cout << message;
+std::cout << "\n";
 	commands.clear();
 }

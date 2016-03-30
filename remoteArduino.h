@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SFML/Network.hpp"
+#include <string>
 
 class RemoteArduino
 {
@@ -15,5 +16,5 @@ public:
 
 	bool connect(const sf::IpAddress& ip, unsigned short port);
 	void addCommand(int motorNumber, int power);
-	void send();
+	void send(std::string message);
 };
