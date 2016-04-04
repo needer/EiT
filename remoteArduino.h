@@ -2,6 +2,7 @@
 
 #include "SFML/Network.hpp"
 #include <string>
+#include <windows.h>
 
 class RemoteArduino
 {
@@ -16,5 +17,5 @@ public:
 
 	bool connect(const sf::IpAddress& ip, unsigned short port);
 	void addCommand(int motorNumber, int power);
-	void send(std::string message);
+	void sendSequence(std::vector<std::string> sequence);
 };
