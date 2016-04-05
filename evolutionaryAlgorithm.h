@@ -7,6 +7,7 @@
 #include <time.h>
 #include <iostream>
 #include <cmath>
+#include <cstring>
 
 #include "individual.h"
 

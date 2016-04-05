@@ -176,7 +176,10 @@ std::vector<int> EvolutionaryAlgorithm::mutation(std::vector<int> genotype)
 
 int EvolutionaryAlgorithm::newGeno()
 {
-	return rand() % 2; //4
+    char[2] randomGeno;
+    for (int i = 0; i < randomGeno.size(); i++){
+        randomGeno[i] = rand() % 4;
+	return randomGeno;
 }
 
 std::vector<int> EvolutionaryAlgorithm::randomGenotype()
