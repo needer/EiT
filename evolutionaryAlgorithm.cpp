@@ -26,13 +26,13 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 
 void EvolutionaryAlgorithm::evolutionaryLoop()
 {
-	children.insert(children.end(), population.begin(), population.end());
-	fitnessEvaluation();
-	population.clear();
-	population.insert(population.end(), children.begin(), children.end());
-	loggingRoutine();
-	while (noSolution)
-	{
+	//children.insert(children.end(), population.begin(), population.end());
+	//fitnessEvaluation();
+	//population.clear();
+	//population.insert(population.end(), children.begin(), children.end());
+	//loggingRoutine();
+	//while (noSolution)
+	//{
 		elitism();
 		mating();
 		fitnessEvaluation();
@@ -40,15 +40,15 @@ void EvolutionaryAlgorithm::evolutionaryLoop()
 		population.insert(population.end(), children.begin(), children.end());
 		population.insert(population.end(), masterRace.begin(), masterRace.end());
 		loggingRoutine();
-	}
+	//}
 	//plottingRoutine();
 }
 
 void EvolutionaryAlgorithm::fitnessEvaluation()
 {
-	calculateFitness();
+	//calculateFitness();
 }
-
+/*
 void EvolutionaryAlgorithm::calculateFitness()
 {
 	int count;
@@ -69,6 +69,7 @@ void EvolutionaryAlgorithm::calculateFitness()
         }
 	}
 }
+*/
 
 void EvolutionaryAlgorithm::elitism()
 {
@@ -178,7 +179,7 @@ int EvolutionaryAlgorithm::newGeno()
 {
     char[2] randomGeno;
     for (int i = 0; i < randomGeno.size(); i++){
-        randomGeno[i] = rand() % 4;
+        randomGeno[i] = rand() % 3;
 	return randomGeno;
 }
 
