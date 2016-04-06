@@ -3,13 +3,14 @@
 EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 {
 	generationNumber = 0;
-	numberOfElites = 5; //2
-	populationSize = 50; //10
+	numberOfElites = 2; //2
+	populationSize = 10; //10
 	childrenSize = populationSize - numberOfElites;
 	crossoverRate = 0.5;
 	mutationRate = 0.1;
 	bestFitness = 0;
 	averageFitness = 0;
+	numberOfCommands = 10;
 	//noSolution = true;
 	//solutionLength = 40;
     /*
@@ -184,16 +185,17 @@ std::vector<std::string> EvolutionaryAlgorithm::mutation(std::vector<std::string
 std::string EvolutionaryAlgorithm::newGeno()
 {
     std::string randomGeno = "";
-	for (int i = 0; i < randomGeno.size(); i++){
+	for (int i = 0; i < 2; i++){
 		randomGeno += std::to_string(rand() % 3);
 	}
+
 	return randomGeno;
 }
 
 std::vector<std::string> EvolutionaryAlgorithm::randomGenotype()
 {
 	std::vector<std::string> newRandomGenotype;
-	for (int i = 0; i < solutionLength; i++)
+	for (int i = 0; i < numberOfCommands; i++)
 	{
 		newRandomGenotype.push_back(newGeno());
 	}

@@ -19,6 +19,7 @@ public:
     int populationSize;
     int childrenSize;
     int solutionLength;
+	int numberOfCommands;
     double crossoverRate;
     double mutationRate;
     double bestFitness;
