@@ -10,17 +10,20 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 	mutationRate = 0.1;
 	bestFitness = 0;
 	averageFitness = 0;
-	noSolution = true;
-	solutionLength = 40;
+	//noSolution = true;
+	//solutionLength = 40;
+    /*
 	for (int i = 0; i < solutionLength; i++)
 	{
 		solution.push_back(1);
 	}
+    */
 	for (int i = 0; i < populationSize; i++)
 	{
 		population.push_back(Individual(randomGenotype()));
 	}
 	srand(time(NULL));
+	children.insert(children.end(), population.begin(), population.end());
 	evolutionaryLoop();
 }
 
@@ -44,10 +47,13 @@ void EvolutionaryAlgorithm::evolutionaryLoop()
 	//plottingRoutine();
 }
 
+/*
 void EvolutionaryAlgorithm::fitnessEvaluation()
 {
 	//calculateFitness();
 }
+*/
+
 /*
 void EvolutionaryAlgorithm::calculateFitness()
 {

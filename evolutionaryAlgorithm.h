@@ -39,10 +39,10 @@ public:
         
     EvolutionaryAlgorithm();
     void evolutionaryLoop();
-    void fitnessEvaluation();
+    //void fitnessEvaluation();
     void elitism();
     void mating();
-    void calculateFitness();
+    //void calculateFitness();
 	std::vector<double> sigmaScaling();
     std::vector<int> mutation(std::vector<int>);
     int newGeno();
