@@ -17,5 +17,5 @@ public:
 
 	bool connect(const sf::IpAddress& ip, unsigned short port);
 	void addCommand(int motorNumber, int power);
-	void sendSequence(std::vector<std::string> sequence);
+	void send(char[] a);
 };

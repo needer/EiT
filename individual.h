@@ -5,8 +5,8 @@
 class Individual
 {
 public:
-    std::vector<int> genotype;
+	std::vector<char[]> genotype;
     double fitness;
 
-    Individual(std::vector<int>);
+    Individual(std::vector<char[]>);
 };
