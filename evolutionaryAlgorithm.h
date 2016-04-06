@@ -7,7 +7,7 @@
 #include <time.h>
 #include <iostream>
 #include <cmath>
-#include <cstring>
+#include <string>
 
 #include "individual.h"
 
@@ -34,8 +34,8 @@ public:
     std::vector<double> scaledFitness;
     std::vector<Individual> children;
     std::vector<Individual> masterRace;
-    std::vector<int> bestGenotype;
-    std::vector<int> solution;
+    std::vector<std::string> bestGenotype;
+    //std::vector<int> solution;
         
     EvolutionaryAlgorithm();
     void evolutionaryLoop();
@@ -44,10 +44,10 @@ public:
     void mating();
     //void calculateFitness();
 	std::vector<double> sigmaScaling();
-    std::vector<int> mutation(std::vector<int>);
+    std::vector<std::string> mutation(std::vector<std::string>);
     int newGeno();
-    std::vector<int> randomGenotype();
-    std::vector<int> crossover(std::vector<int>, std::vector<int>);
+    std::vector<std::string> randomGenotype();
+    std::vector<std::string> crossover(std::vector<std::string>, std::vector<std::string>);
     void loggingRoutine();
     void plottingRoutine();
 };

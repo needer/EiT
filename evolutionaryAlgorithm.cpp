@@ -134,7 +134,7 @@ void EvolutionaryAlgorithm::mating()
 				break;
 			}
 		}
-		std::vector<int> newGenotype = crossover(population[index1].genotype, population[index2].genotype);
+		std::vector<std::string> newGenotype = crossover(population[index1].genotype, population[index2].genotype);
 		newGenotype = mutation(newGenotype);
 		children.push_back(Individual(newGenotype));
 	}
@@ -163,9 +163,9 @@ std::vector<double> EvolutionaryAlgorithm::sigmaScaling()
 	return sigmaFitness;
 }
 
-std::vector<int> EvolutionaryAlgorithm::mutation(std::vector<int> genotype)
+std::vector<std::string> EvolutionaryAlgorithm::mutation(std::vector<std::string> genotype)
 {
-	std::vector<int> newGenotype;
+	std::vector<std::string> newGenotype;
 	for (int i = 0; i < genotype.size(); i++)
 	{
 		double rand = std::rand() / (RAND_MAX + 1.0);
@@ -181,17 +181,17 @@ std::vector<int> EvolutionaryAlgorithm::mutation(std::vector<int> genotype)
 	return newGenotype;
 }
 
-int EvolutionaryAlgorithm::newGeno()
+std::string EvolutionaryAlgorithm::newGeno()
 {
-    char[2] randomGeno;
+    std::string randomGeno "";
     for (int i = 0; i < randomGeno.size(); i++){
-        randomGeno[i] = rand() % 3;
+        randomGeno += std::to_string(rand() % 3);
 	return randomGeno;
 }
 
-std::vector<int> EvolutionaryAlgorithm::randomGenotype()
+std::vector<std::string> EvolutionaryAlgorithm::randomGenotype()
 {
-	std::vector<int> newRandomGenotype;
+	std::vector<std::string> newRandomGenotype;
 	for (int i = 0; i < solutionLength; i++)
 	{
 		newRandomGenotype.push_back(newGeno());
@@ -199,9 +199,9 @@ std::vector<int> EvolutionaryAlgorithm::randomGenotype()
 	return newRandomGenotype;
 }
 
-std::vector<int> EvolutionaryAlgorithm::crossover(std::vector<int> genotype1, std::vector<int> genotype2)
+std::vector<std::string> EvolutionaryAlgorithm::crossover(std::vector<std::string> genotype1, std::vector<std::string> genotype2)
 {
-	std::vector<int> newGenotype;
+	std::vector<std::string> newGenotype;
 	for (int i = 0; i < genotype1.size(); i++)
 	{
 		double rand = (double)std::rand() / (RAND_MAX + 1.0);
