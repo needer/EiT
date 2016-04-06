@@ -24,7 +24,7 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 	}
 	srand(time(NULL));
 	children.insert(children.end(), population.begin(), population.end());
-	evolutionaryLoop();
+	//evolutionaryLoop();
 }
 
 void EvolutionaryAlgorithm::evolutionaryLoop()
@@ -38,7 +38,7 @@ void EvolutionaryAlgorithm::evolutionaryLoop()
 	//{
 		elitism();
 		mating();
-		fitnessEvaluation();
+		//fitnessEvaluation();
 		population.clear();
 		population.insert(population.end(), children.begin(), children.end());
 		population.insert(population.end(), masterRace.begin(), masterRace.end());
@@ -183,9 +183,10 @@ std::vector<std::string> EvolutionaryAlgorithm::mutation(std::vector<std::string
 
 std::string EvolutionaryAlgorithm::newGeno()
 {
-    std::string randomGeno "";
-    for (int i = 0; i < randomGeno.size(); i++){
-        randomGeno += std::to_string(rand() % 3);
+    std::string randomGeno = "";
+	for (int i = 0; i < randomGeno.size(); i++){
+		randomGeno += std::to_string(rand() % 3);
+	}
 	return randomGeno;
 }
 

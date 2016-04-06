@@ -1,5 +1,6 @@
 #include "evolutionaryAlgorithm.h"
 #include "remoteArduino.h"
+#include <string>
 #include <windows.h>
 
 int main()
@@ -7,13 +8,14 @@ int main()
 	RemoteArduino arduino;
 	EvolutionaryAlgorithm ea;
 	if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000)) {
-		pop = ea.children;
+		std::vector<Individual> pop = ea.children;
 
 		for (unsigned i = 0; i < pop.size(); i++) {
-			ind = pop[i];
+			 Individual ind = pop[i];
 
-			for (unsigned j = 0; j < ind.size(); i++) {
-				arduino.send(ind[i]);
+			for (unsigned j = 0; j < ind.genotype.size(); j++) {
+				arduino.send(ind.genotype[j]);
+			std::cout << "test";
 			}
 		}
 	}

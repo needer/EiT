@@ -45,7 +45,7 @@ public:
     //void calculateFitness();
 	std::vector<double> sigmaScaling();
     std::vector<std::string> mutation(std::vector<std::string>);
-    int newGeno();
+    std::string newGeno();
     std::vector<std::string> randomGenotype();
     std::vector<std::string> crossover(std::vector<std::string>, std::vector<std::string>);
     void loggingRoutine();

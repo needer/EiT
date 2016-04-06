@@ -30,13 +30,12 @@ void RemoteArduino::addCommand(int motorNumber, int power)
 	commands.push_back(poww);
 }
 
-void RemoteArduino::send(char[] a)
+void RemoteArduino::send(std::string message)
 {
-		tcpSocket.send(a, a.size());
+	tcpSocket.send(message.c_str(), message.length());
+	Sleep(1000);
 
-		//Sleep(1000);
 
-
-	/*tcpSocket.send(message.c_str(), message.length());
-	commands.clear();*/
+	
+	//commands.clear();
 }
