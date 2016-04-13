@@ -30,7 +30,7 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 
 void EvolutionaryAlgorithm::evolutionaryLoop(std::vector<double> childrenScore)
 {
-    if(generationNumber = 0){
+    if(generationNumber == 0){
 	    calculateFitness(childrenScore);
         population.clear();
 	    population.insert(population.end(), children.begin(), children.end());

@@ -1,10 +1,11 @@
+#include <iostream>
+#include <string>
+#include <thread>
+#include <mutex>
+
 #include "evolutionaryAlgorithm.h"
 #include "remoteArduino.h"
 #include "camera.h"
-#include <string>
-#include <windows.h>
-#include <thread>
-#include <mutex>
 
 
 static bool cameraThreadRunning = true;
@@ -71,7 +72,7 @@ int main()
 	// Wait for input to continue
 	std::cout << "Please configure your camera settings correctly!" << std::endl;
 	std::cout << "Type anything to continue the program: ";
-	int cont = 0;
+	int cont;
 	std::cin >> cont;
 	std::cout << "Main thread started" << std::endl;
 
@@ -80,7 +81,6 @@ int main()
 	sf::Clock clock;
 	sf::Time dt = clock.getElapsedTime();
 
-
 	// Arduino setup
 	RemoteArduino arduino;
 	EvolutionaryAlgorithm ea;
@@ -88,7 +88,7 @@ int main()
 
 	// Connect to arduiono
 	if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000))
-		std::cout << "Koblet til" << "\n";
+		std::cout << "Koblet til" << std::endl;
 	else
 	{
 		cameraThreadRunning = false;
@@ -99,7 +99,7 @@ int main()
 	while (true) {
 		// Print population
 		std::vector<Individual> pop = ea.children;
-		std::cout << pop.size() << "\n";
+		std::cout << pop.size() << std::endl;
 
 		//Vecotr of scores
 		std::vector<double> score;
@@ -124,7 +124,7 @@ int main()
 				std::cout << ind.genotype[j];
 				std::cout << "\n";
 			}
-
+			arduino.send("00");
 			//Get stop position from camera
 			posMutex.lock();
 
@@ -146,10 +146,16 @@ int main()
 			Sleep(2000);
 		}
 
+
 		//Send score to algoritm
 		ea.evolutionaryLoop(score);
 
-		Sleep(9000);
+		// Pause for a second
+		std::cout << "Continue?" << std::endl;
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		int cunt;
+		std::cin >> cunt;
 	}
 
 	// Shutdown the other thread

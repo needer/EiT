@@ -73,9 +73,9 @@ void Camera::capture()
 void Camera::drawCircle(const Vec2& position)
 {
 	if (state == NORMAL)
-		cv::circle(frame, cv::Point(position.x, position.y), 10, cv::Scalar(0, 255, 0), 20);
+		cv::circle(frame, cv::Point(position.x, position.y), 1, cv::Scalar(0, 255, 0), 20);
 	if (state == THRESHOLDED)
-		cv::circle(imgThresholded, cv::Point(position.x, position.y), 10, cv::Scalar(0, 255, 0), 20);
+		cv::circle(imgThresholded, cv::Point(position.x, position.y), 1, cv::Scalar(0, 255, 0), 20);
 }
 
 // Display a picture
