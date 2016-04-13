@@ -96,28 +96,61 @@ int main()
 		return 0;
 	}
 
-	// Print population
-	std::vector<Individual> pop = ea.children;
-	std::cout << pop.size() << "\n";
+	while (true) {
+		// Print population
+		std::vector<Individual> pop = ea.children;
+		std::cout << pop.size() << "\n";
 
-	// For each population
-	for (unsigned i = 0; i < pop.size(); i++) 
-	{
-		Individual ind = pop[i];
-		std::cout << "----" << "\n";
+		//Vecotr of scores
+		std::vector<double> score;
 
-		// For each individual
-		for (unsigned j = 0; j < ind.genotype.size(); j++) 
+		// For each population
+		for (unsigned i = 0; i < pop.size(); i++)
 		{
-			arduino.send(ind.genotype[j]);
-			std::cout << ind.genotype[j];
-			std::cout << "\n";
+			Individual ind = pop[i];
+			std::cout << "----" << "\n";
+
+			//Get stop position from camera
+			posMutex.lock();
+
+			double startPos = (double)currentPosition.magnitude();
+
+			posMutex.unlock();
+
+			// For each individual
+			for (unsigned j = 0; j < ind.genotype.size(); j++)
+			{
+				arduino.send(ind.genotype[j]);
+				std::cout << ind.genotype[j];
+				std::cout << "\n";
+			}
+
+			//Get stop position from camera
+			posMutex.lock();
+
+			double stopPos = (double)currentPosition.magnitude();
+
+			posMutex.unlock();
+
+			//Calculate score
+			double individualScore = stopPos - startPos;
+
+			/*std::string in = "";
+			double individualScore = 0.0;
+
+			std::cin >> in;
+			individualScore = std::stod(in);*/
+
+			score.push_back(individualScore);
+
+			Sleep(2000);
 		}
 
-		Sleep(2000);
-	}
+		//Send score to algoritm
+		ea.evolutionaryLoop(score);
 
-	Sleep(9000);
+		Sleep(9000);
+	}
 
 	// Shutdown the other thread
 	cameraThreadRunning = false;
