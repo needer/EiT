@@ -1,7 +1,8 @@
 #include "evolutionaryAlgorithm.h"
 
-EvolutionaryAlgorithm::EvolutionaryAlgorithm()
+EvolutionaryAlgorithm::EvolutionaryAlgorithm(int numberOfRounds)
 {
+    this->numberOfRounds = numberOfRounds;
 	generationNumber = 0;
 	numberOfElites = 2; //2
 	populationSize = 10; //10
@@ -31,20 +32,20 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 void EvolutionaryAlgorithm::evolutionaryLoop()
 {
 	//children.insert(children.end(), population.begin(), population.end());
-	//fitnessEvaluation();
-	//population.clear();
-	//population.insert(population.end(), children.begin(), children.end());
-	//loggingRoutine();
-	//while (noSolution)
-	//{
+	calculateFitness();
+	population.clear();
+	population.insert(population.end(), children.begin(), children.end());
+	loggingRoutine();
+    for(int i = 0; i<numberOfRounds; i++)
+	{
 		elitism();
 		mating();
-		//fitnessEvaluation();
+		calculateFitness();
 		population.clear();
 		population.insert(population.end(), children.begin(), children.end());
 		population.insert(population.end(), masterRace.begin(), masterRace.end());
 		loggingRoutine();
-	//}
+	}
 	//plottingRoutine();
 }
 
@@ -55,28 +56,15 @@ void EvolutionaryAlgorithm::fitnessEvaluation()
 }
 */
 
-/*
-void EvolutionaryAlgorithm::calculateFitness()
+
+void EvolutionaryAlgorithm::calculateFitness(std::vector<double> childrenScore)
 {
-	int count;
 	for (int i = 0; i < children.size(); i++)
 	{
-        count = 0;
-		for (int j = 0; j < solutionLength; j++)
-		{
-			if (children[i].genotype[j] == solution[j])
-			{
-				count++;
-			}
-		}
-		children[i].fitness = (double)count / (double)solutionLength;
-        if(children[i].fitness == 1)
-        {
-            noSolution = false;
-        }
+        children[i].fitness = childrenScore[i];
 	}
 }
-*/
+
 
 void EvolutionaryAlgorithm::elitism()
 {
