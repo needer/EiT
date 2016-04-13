@@ -39,7 +39,6 @@ public:
     //std::vector<int> solution;
         
     EvolutionaryAlgorithm();
-    void firstGeneration(std::vector<double> childrenScore);
     void evolutionaryLoop(std::vector<double> childrenScore);
     //void fitnessEvaluation();
     void elitism();

@@ -28,25 +28,24 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
 	//evolutionaryLoop();
 }
 
-void EvolutionaryAlgorithm::firstGeneration(std::vector<double> childrenScore)
-{
-	calculateFitness(childrenScore);
-    population.clear();
-	population.insert(population.end(), children.begin(), children.end());
-	loggingRoutine();
-	elitism();
-	mating();
-}
-
 void EvolutionaryAlgorithm::evolutionaryLoop(std::vector<double> childrenScore)
 {
-	calculateFitness(childrenScore);
-    population.clear();
-	population.insert(population.end(), children.begin(), children.end());
-	population.insert(population.end(), masterRace.begin(), masterRace.end());
-	loggingRoutine();
-	elitism();
-	mating();
+    if(generationNumber = 0){
+	    calculateFitness(childrenScore);
+        population.clear();
+	    population.insert(population.end(), children.begin(), children.end());
+	    loggingRoutine();
+	    elitism();
+	    mating();
+    }else{
+	    calculateFitness(childrenScore);
+        population.clear();
+	    population.insert(population.end(), children.begin(), children.end());
+	    population.insert(population.end(), masterRace.begin(), masterRace.end());
+	    loggingRoutine();
+	    elitism();
+	    mating();
+    }
 }
 
 /*
