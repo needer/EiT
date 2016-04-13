@@ -1,35 +1,127 @@
 #include "evolutionaryAlgorithm.h"
 #include "remoteArduino.h"
+#include "camera.h"
 #include <string>
 #include <windows.h>
+#include <thread>
+#include <mutex>
+
+
+static bool cameraThreadRunning = true;
+static std::mutex posMutex;
+static Vec2 currentPosition = Vec2(0,0);
+
+void cameraThread()
+{
+	// Camera setup
+	Camera c = Camera();
+	
+	// Variables
+	Vec2 lastPosition(0, 0);
+	Vec2 startPosition(0, 0);
+	Vec2 endPosition(0, 0);
+
+	// Clock and Delta Time
+	sf::Clock clock;
+	sf::Time dt = clock.getElapsedTime();
+
+	while (cameraThreadRunning)
+	{
+		// Take a picture
+		c.capture();
+
+		// Threshold the picture
+		c.threshold();
+
+		// Get the position of the object
+		Vec2 pos = c.track();
+		posMutex.lock();
+		currentPosition = pos;
+		posMutex.unlock();
+
+		// Draw the target on the screen
+		c.drawCircle(pos);
+
+		// Calculate velocity
+		Vec2 vel = pos - lastPosition;
+		lastPosition = pos;
+
+		// Display on screen
+		c.display();
+
+		// Handle input
+		int key = cv::waitKey(1);
+		if (key == 27)
+			break;
+		if (key == 32)
+		if (c.state == Camera::NORMAL)
+			c.state = Camera::THRESHOLDED;
+		else
+			c.state = Camera::NORMAL;
+
+	}
+
+}
 
 int main()
 {
+	// Start camera thread
+	std::thread cThread (cameraThread);
+
+	// Wait for input to continue
+	std::cout << "Please configure your camera settings correctly!" << std::endl;
+	std::cout << "Type anything to continue the program: ";
+	int cont = 0;
+	std::cin >> cont;
+	std::cout << "Main thread started" << std::endl;
+
+
+	// Clock and Delta Time
+	sf::Clock clock;
+	sf::Time dt = clock.getElapsedTime();
+
+
+	// Arduino setup
 	RemoteArduino arduino;
 	EvolutionaryAlgorithm ea;
-	if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000)) {
-	std::cout << "Koblet til" << "\n";
-	}
-	else {
+
+
+	// Connect to arduiono
+	if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000))
+		std::cout << "Koblet til" << "\n";
+	else
+	{
+		cameraThreadRunning = false;
+		cThread.join();
 		return 0;
 	}
+
+	// Print population
 	std::vector<Individual> pop = ea.children;
 	std::cout << pop.size() << "\n";
 
-		for (unsigned i = 0; i < pop.size(); i++) {
-			 Individual ind = pop[i];
-			 std::cout << "----" << "\n";
+	// For each population
+	for (unsigned i = 0; i < pop.size(); i++) 
+	{
+		Individual ind = pop[i];
+		std::cout << "----" << "\n";
 
-			for (unsigned j = 0; j < ind.genotype.size(); j++) {
-				arduino.send(ind.genotype[j]);
-				std::cout << ind.genotype[j];
-				std::cout << "\n";
-			}
-
-			Sleep(2000);
+		// For each individual
+		for (unsigned j = 0; j < ind.genotype.size(); j++) 
+		{
+			arduino.send(ind.genotype[j]);
+			std::cout << ind.genotype[j];
+			std::cout << "\n";
 		}
-	
-		Sleep(9000);
-	
+
+		Sleep(2000);
+	}
+
+	Sleep(9000);
+
+	// Shutdown the other thread
+	cameraThreadRunning = false;
+	cThread.join();
+
 	return 0;
 }
