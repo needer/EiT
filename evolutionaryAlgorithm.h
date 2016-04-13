@@ -14,7 +14,6 @@
 class EvolutionaryAlgorithm
 {
 public:
-    int numberOfRounds;
     int generationNumber;
     int numberOfElites;
     int populationSize;
@@ -39,8 +38,9 @@ public:
     std::vector<std::string> bestGenotype;
     //std::vector<int> solution;
         
-    EvolutionaryAlgorithm(int numberOfRounds);
-    void evolutionaryLoop();
+    EvolutionaryAlgorithm();
+    void firstGeneration(std::vector<double> childrenScore);
+    void evolutionaryLoop(std::vector<double> childrenScore);
     //void fitnessEvaluation();
     void elitism();
     void mating();
