@@ -113,7 +113,7 @@ int main()
 			//Get stop position from camera
 			posMutex.lock();
 
-			double startPos = (double)currentPosition.magnitude();
+			Vec2 startPos = currentPosition;
 
 			posMutex.unlock();
 
@@ -128,13 +128,13 @@ int main()
 			//Get stop position from camera
 			posMutex.lock();
 
-			double stopPos = (double)currentPosition.magnitude();
+			Vec2 stopPos = currentPosition;
 
 			posMutex.unlock();
 
 			//Calculate score
-			double individualScore = stopPos - startPos;
-
+			double individualScore = (double)(stopPos - startPos).magnitude();
+			std::cout << "Score: " << individualScore;
 			/*std::string in = "";
 			double individualScore = 0.0;
 
