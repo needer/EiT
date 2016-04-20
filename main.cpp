@@ -96,7 +96,13 @@ int main()
 		return 0;
 	}
 
-	while (true) {
+	std::cout << "Sender 10";
+	arduino.send("10");
+	
+	//Stop
+	arduino.send("00");
+
+	while (false) {
 		// Print population
 		std::vector<Individual> pop = ea.children;
 		std::cout << pop.size() << std::endl;
@@ -136,7 +142,7 @@ int main()
 				//Checing if the rotbot has left the area
 				if (pos.x == -1 && pos.y == -1) {
 					// Pause for a second
-					arduino.send("00")
+					arduino.send("00");
 					std::cout << "The robot has left the area" << std::endl;
 					std::cout << "Continue?" << std::endl;
 					std::cin.clear();
