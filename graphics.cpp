@@ -50,18 +50,18 @@ void Graphics::mainLoop()
 
 			if (s == "01")
 			{
-				transform.rotate(20.0f);
-				transform.translate(0.0f, 10.0f);
+				transform.rotate(6.25f);
+				transform.translate(0.0f, 5.0f);
 			}
 			if (s == "02")
 			{
-				transform.rotate(-20.0f);
-				transform.translate(0.0f, -10.0f);
+				transform.rotate(-6.25f);
+				transform.translate(0.0f, -5.0f);
 			}
 			if (s == "10")
 			{
-				transform.rotate(-20.0f);
-				transform.translate(0.0f, 10.0f);
+				transform.rotate(-6.25f);
+				transform.translate(0.0f, 5.0f);
 			}
 			if (s == "11")
 			{
@@ -69,16 +69,16 @@ void Graphics::mainLoop()
 			}
 			if (s == "12")
 			{
-				transform.rotate(-40.0f);
+				transform.rotate(-12.5f);
 			}
 			if (s == "20")
 			{
-				transform.rotate(20.0f);
-				transform.translate(0.0f, -10.0f);
+				transform.rotate(6.25f);
+				transform.translate(0.0f, -5.0f);
 			}
 			if (s == "21")
 			{
-				transform.rotate(40.0f);
+				transform.rotate(12.5f);
 			}
 			if (s == "22")
 			{
