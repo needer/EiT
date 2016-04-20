@@ -142,7 +142,7 @@ int main()
 
 	
 	// Connect to arduiono
-	if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000))
+	/*if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000))
 		std::cout << "Koblet til" << std::endl;
 	else
 	{
@@ -156,9 +156,9 @@ int main()
 	arduino.send("10");
 	
 	//Stop
-	arduino.send("00");
+	arduino.send("00");*/
 
-	while (false) {
+	while (true) {
 		// Print population
 		std::vector<Individual> pop = ea.children;
 		std::cout << pop.size() << std::endl;
@@ -182,7 +182,7 @@ int main()
 			graphics.setData(ind.genotype);
 
 			// For each individual
-			for (unsigned j = 0; j < ind.genotype.size(); j++)
+			/*for (unsigned j = 0; j < ind.genotype.size(); j++)
 			{
 				arduino.send(ind.genotype[j]);
 				std::cout << ind.genotype[j];
@@ -224,12 +224,20 @@ int main()
 
 			//Calculate score
 			double individualScore = (double)(stopPos - startPos).magnitude();
+			std::cout << "Score: " << individualScore;*/
+			
+			double individualScore = (double)getVirtualScore(ind.genotype);
 			std::cout << "Score: " << individualScore;
+
 			/*std::string in = "";
 			double individualScore = 0.0;
 
 			std::cin >> in;
 			individualScore = std::stod(in);*/
+
+			if (individualScore > 90.0) {
+				break;
+			}
 
 			score.push_back(individualScore);
 
