@@ -231,11 +231,11 @@ void EvolutionaryAlgorithm::loggingRoutine()
 	}
 	bestGenotype = population[fittestIndex].genotype;
     bestFitness = population[fittestIndex].fitness;
-
+	std::ofstream out;
     if(generationNumber == 1){
-        std::ofstream out("statistics.txt");
+        out.open("statistics.txt");
     }else{
-        std::ofstream out("statistics.txt", fstream::app);
+        out.open("statistics.txt", std::fstream::app);
     }
     out << "Generation Number:  "<< generationNumber << std::endl;
 	out << "Average Fitness: " << averageFitness << std::endl;
