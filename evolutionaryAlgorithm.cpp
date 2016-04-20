@@ -231,24 +231,35 @@ void EvolutionaryAlgorithm::loggingRoutine()
 	}
 	bestGenotype = population[fittestIndex].genotype;
     bestFitness = population[fittestIndex].fitness;
-	std::ofstream out;
+	std::ofstream statisticsOutput;
     if(generationNumber == 1){
-        out.open("statistics.txt");
+        statisticsOutput.open("statistics.txt");
+        populationOutput.open("populationBackup.txt");
     }else{
-        out.open("statistics.txt", std::fstream::app);
+        statisticsOutput.open("statistics.txt", std::fstream::app);
+        populationOutput.open("populationBackup.txt", std::fstream::app);
     }
-    out << "Generation Number:  "<< generationNumber << std::endl;
-	out << "Average Fitness: " << averageFitness << std::endl;
-	out << "Standard Deviation: " << standardDeviationFitness << std::endl;
-	out << "Best Fitness: " << bestFitness << std::endl;
-	out << "Best Genotype: ";
+    statisticsOutput << "Generation Number:  "<< generationNumber << std::endl;
+	statisticsOutput << "Average Fitness: " << averageFitness << std::endl;
+	statisticsOutput << "Standard Deviation: " << standardDeviationFitness << std::endl;
+	statisticsOutput << "Best Fitness: " << bestFitness << std::endl;
+	statisticsOutput << "Best Genotype: ";
 	for (int i = 0; i<bestGenotype.size(); i++)
-		out << bestGenotype[i];
-	out << std::endl;
-    for(int i=0; i<40; i++)
-		out << "-";
-	out << std::endl;
-    out.close();
+		statisticsOutput << bestGenotype[i];
+	statisticsOutput << std::endl;
+    statisticsOutput << std::string(40, '-') << std::endl;
+	statisticsOutput << std::endl;
+    statisticsOutput.close();
+
+    populationOutput << "Generation Number:  "<< generationNumber << std::endl;
+    for(int i = 0; i<population.size(); i++){
+        for(int j = 0; j<population[i].genotype.size(); j++){
+            populationOutput << population[i].genotype[j];
+        }
+        populationOutput << std::endl;
+    }
+    populationOutput << std::string(40, '-') << std::endl;
+    populationOutput.close();
 
 	std::cout << "Generation Number: " << generationNumber << std::endl;
 	std::cout << "Average Fitness: " << averageFitness << std::endl;
@@ -258,8 +269,7 @@ void EvolutionaryAlgorithm::loggingRoutine()
     for(int i=0; i<bestGenotype.size(); i++)
 		std::cout << bestGenotype[i];
 	std::cout << std::endl;
-    for(int i=0; i<40; i++)
-		std::cout << "-";
+    std::cout << std::string(40, '-') << std::endl;
 	std::cout << std::endl;
 
 	//bestFitnessArray.push_back(bestFitness);
