@@ -6,6 +6,7 @@
 #include "evolutionaryAlgorithm.h"
 #include "remoteArduino.h"
 #include "camera.h"
+#include "graphics.h"
 
 
 static bool cameraThreadRunning = true;
@@ -66,6 +67,11 @@ void cameraThread()
 
 int main()
 {
+	// Start graphics thread
+	Graphics graphics;
+	graphics.startThread();
+	std::vector<std::string> aaaa;
+	graphics.setData(aaaa);
 	// Start camera thread
 	std::thread cThread (cameraThread);
 
@@ -85,7 +91,7 @@ int main()
 	RemoteArduino arduino;
 	EvolutionaryAlgorithm ea;
 
-
+	
 	// Connect to arduiono
 	if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000))
 		std::cout << "Koblet til" << std::endl;
@@ -93,6 +99,7 @@ int main()
 	{
 		cameraThreadRunning = false;
 		cThread.join();
+		graphics.join();
 		return 0;
 	}
 
@@ -122,6 +129,8 @@ int main()
 			Vec2 startPos = currentPosition;
 
 			posMutex.unlock();
+
+			graphics.setData(ind.genotype);
 
 			// For each individual
 			for (unsigned j = 0; j < ind.genotype.size(); j++)
@@ -191,8 +200,12 @@ int main()
 	}
 
 	// Shutdown the other thread
+	std::cout << "Shutting down..." << std::endl;
+	std::cout << "Shutting down.." << std::endl;
+	std::cout << "Shutting down." << std::endl;
 	cameraThreadRunning = false;
 	cThread.join();
-
+	graphics.join();
+	
 	return 0;
 }
