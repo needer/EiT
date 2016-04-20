@@ -123,6 +123,32 @@ int main()
 				arduino.send(ind.genotype[j]);
 				std::cout << ind.genotype[j];
 				std::cout << "\n";
+
+				//Geting curen position
+				posMutex.lock();
+
+				Vec2 pos = currentPosition;
+
+				posMutex.unlock();
+
+				//std::cout << pos.x << " " << pos.y << std::endl;
+
+				//Checing if the rotbot has left the area
+				if (pos.x == -1 && pos.y == -1) {
+					// Pause for a second
+					arduino.send("00")
+					std::cout << "The robot has left the area" << std::endl;
+					std::cout << "Continue?" << std::endl;
+					std::cin.clear();
+					std::cin.ignore(INT_MAX, '\n');
+					int cunt;
+					std::cin >> cunt;
+
+					arduino.send(ind.genotype[j]);
+					std::cout << ind.genotype[j];
+					std::cout << "\n";
+				}
+
 			}
 			arduino.send("00");
 			//Get stop position from camera
@@ -143,7 +169,7 @@ int main()
 
 			score.push_back(individualScore);
 
-			Sleep(2000);
+			//Sleep(2000);
 		}
 
 
@@ -151,11 +177,11 @@ int main()
 		ea.evolutionaryLoop(score);
 
 		// Pause for a second
-		std::cout << "Continue?" << std::endl;
+		/*std::cout << "Continue?" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		int cunt;
-		std::cin >> cunt;
+		std::cin >> cunt;*/
 	}
 
 	// Shutdown the other thread
