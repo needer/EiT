@@ -238,7 +238,7 @@ void EvolutionaryAlgorithm::loggingRoutine()
 	out << "Standard Deviation: " << standardDeviationFitness << std::endl;
 	out << "Best Fitness: " << bestFitness << std::endl;
 	out << "Best Genotype: ";
-    for(int i=0; i<solutionLength; i++)
+	for (int i = 0; i<bestGenotype.size(); i++)
 		out << bestGenotype[i];
 	out << std::endl;
     for(int i=0; i<40; i++)
@@ -251,7 +251,7 @@ void EvolutionaryAlgorithm::loggingRoutine()
 	std::cout << "Standard Deviation: " << standardDeviationFitness << std::endl;
 	std::cout << "Best Fitness: " << bestFitness << std::endl;
 	std::cout << "Best Genotype: ";
-    for(int i=0; i<solutionLength; i++)
+    for(int i=0; i<bestGenotype.size(); i++)
 		std::cout << bestGenotype[i];
 	std::cout << std::endl;
     for(int i=0; i<40; i++)
