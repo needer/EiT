@@ -65,13 +65,62 @@ void cameraThread()
 
 }
 
+float getVirtualScore(const std::vector<std::string>& data)
+{
+	sf::Transform transform;
+
+	// Draw
+	for (const std::string& s : data)
+	{
+
+		if (s == "01")
+		{
+			transform.rotate(6.25f);
+			transform.translate(0.0f, 5.0f);
+		}
+		if (s == "02")
+		{
+			transform.rotate(-6.25f);
+			transform.translate(0.0f, -5.0f);
+		}
+		if (s == "10")
+		{
+			transform.rotate(-6.25f);
+			transform.translate(0.0f, 5.0f);
+		}
+		if (s == "11")
+		{
+			transform.translate(0.0f, 20.0f);
+		}
+		if (s == "12")
+		{
+			transform.rotate(-12.5f);
+		}
+		if (s == "20")
+		{
+			transform.rotate(6.25f);
+			transform.translate(0.0f, -5.0f);
+		}
+		if (s == "21")
+		{
+			transform.rotate(12.5f);
+		}
+		if (s == "22")
+		{
+			transform.translate(0.0f, -20.0f);
+		}
+	}
+	sf::Vector2f after = transform.transformPoint(0.0f, 0.0f);
+
+	return sqrtf(powf(after.x, 2.0f) + powf(after.y, 2.0f));
+}
+
 int main()
 {
 	// Start graphics thread
 	Graphics graphics;
 	graphics.startThread();
-	std::vector<std::string> aaaa;
-	graphics.setData(aaaa);
+	
 	// Start camera thread
 	std::thread cThread (cameraThread);
 

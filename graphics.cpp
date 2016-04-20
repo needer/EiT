@@ -65,7 +65,7 @@ void Graphics::mainLoop()
 			}
 			if (s == "11")
 			{
-				transform.translate(0.0f, 20.0f);
+				transform.translate(0.0f, 10.0f);
 			}
 			if (s == "12")
 			{
@@ -82,7 +82,7 @@ void Graphics::mainLoop()
 			}
 			if (s == "22")
 			{
-				transform.translate(0.0f, -20.0f);
+				transform.translate(0.0f, -10.0f);
 			}
 
 
