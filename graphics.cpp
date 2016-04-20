@@ -98,6 +98,9 @@ void Graphics::mainLoop()
 
 		// end the current frame
 		window.display();
+		screenshotLock.lock();
+		screenshot = window.capture();
+		screenshotLock.unlock();
 	}
 }
 
@@ -116,4 +119,12 @@ void Graphics::join()
 		isRunning = false;
 		thread.join();
 	}
+}
+
+void Graphics::saveAsImage(const std::string& name)
+{
+	screenshotLock.lock();
+	
+	screenshot.saveToFile("images/" + name + ".png");
+	screenshotLock.unlock();
 }
