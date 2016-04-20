@@ -120,6 +120,11 @@ int main()
 	// Start graphics thread
 	Graphics graphics;
 	graphics.startThread();
+
+	// Arduino setup
+	RemoteArduino arduino;
+	EvolutionaryAlgorithm ea;
+
 	
 	// Start camera thread
 	std::thread cThread (cameraThread);
@@ -129,20 +134,16 @@ int main()
 	std::cout << "Type anything to continue the program: ";
 	int cont;
 	std::cin >> cont;
-	std::cout << "Main thread started" << std::endl;
+	std::cout << "Starting program" << std::endl;
 
 
 	// Clock and Delta Time
 	sf::Clock clock;
 	sf::Time dt = clock.getElapsedTime();
 
-	// Arduino setup
-	RemoteArduino arduino;
-	EvolutionaryAlgorithm ea;
-
 	
 	// Connect to arduiono
-	/*if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000))
+	if (arduino.connect(sf::IpAddress("192.168.4.1"), 10000))
 		std::cout << "Koblet til" << std::endl;
 	else
 	{
@@ -152,11 +153,6 @@ int main()
 		return 0;
 	}
 
-	std::cout << "Sender 10";
-	arduino.send("10");
-	
-	//Stop
-	arduino.send("00");*/
 
 	while (true) {
 		// Print population
@@ -174,15 +170,13 @@ int main()
 
 			//Get stop position from camera
 			posMutex.lock();
-
 			Vec2 startPos = currentPosition;
-
 			posMutex.unlock();
 
 			graphics.setData(ind.genotype);
 
 			// For each individual
-			/*for (unsigned j = 0; j < ind.genotype.size(); j++)
+			for (unsigned j = 0; j < ind.genotype.size(); j++)
 			{
 				arduino.send(ind.genotype[j]);
 				std::cout << ind.genotype[j];
@@ -190,12 +184,9 @@ int main()
 
 				//Geting curen position
 				posMutex.lock();
-
 				Vec2 pos = currentPosition;
-
 				posMutex.unlock();
 
-				//std::cout << pos.x << " " << pos.y << std::endl;
 
 				//Checing if the rotbot has left the area
 				if (pos.x == -1 && pos.y == -1) {
@@ -215,33 +206,18 @@ int main()
 
 			}
 			arduino.send("00");
+			
 			//Get stop position from camera
 			posMutex.lock();
-
 			Vec2 stopPos = currentPosition;
-
 			posMutex.unlock();
 
 			//Calculate score
 			double individualScore = (double)(stopPos - startPos).magnitude();
-			std::cout << "Score: " << individualScore;*/
-			
-			double individualScore = (double)getVirtualScore(ind.genotype);
 			std::cout << "Score: " << individualScore;
 
-			/*std::string in = "";
-			double individualScore = 0.0;
-
-			std::cin >> in;
-			individualScore = std::stod(in);*/
-
-			if (individualScore > 90.0) {
-				break;
-			}
-
+			
 			score.push_back(individualScore);
-
-			//Sleep(2000);
 		}
 
 
@@ -249,20 +225,17 @@ int main()
 		ea.evolutionaryLoop(score);
 
 		// Pause for a second
-		/*std::cout << "Continue?" << std::endl;
+		std::cout << "Continue?" << std::endl;
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		int cunt;
-		std::cin >> cunt;*/
+		std::cin >> cunt;
 	}
 
-	// Shutdown the other thread
+	// Shutdown the software, wait for threads
 	std::cout << "Shutting down..." << std::endl;
-	std::cout << "Shutting down.." << std::endl;
-	std::cout << "Shutting down." << std::endl;
 	cameraThreadRunning = false;
 	cThread.join();
 	graphics.join();
-	
 	return 0;
 }
