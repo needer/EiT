@@ -21,15 +21,6 @@ EvolutionaryAlgorithm::EvolutionaryAlgorithm()
     */
 	for (int i = 0; i < populationSize; i++)
 	{
-		/*if (i == 4) {
-			std::vector<std::string> perfect;
-
-
-			for (int j = 0; j < 10; j++) {
-				perfect.push_back("11");
-			}
-			population.push_back(Individual(Individual(perfect)));
-		}*/
 		population.push_back(Individual(randomGenotype()));
 	}
 	srand(time(NULL));
